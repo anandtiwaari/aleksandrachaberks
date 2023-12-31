@@ -31,11 +31,13 @@ const alphabets = [
 ];
 
 export const Alphabets = () => {
-  // console.log(poem, "show all the poems");
+  console.log("Choose by Alphabets");
   return (
     <div>
       <div className="wrapper_ mt-10 w-[60%] m-auto">
-        <h4 className=" mt-7  mb-3 bg-[grey] w-max px-3 text-white py-2 rounded-md">Choose by Alphabets</h4>
+        <h4 className=" mt-7  mb-3 bg-[grey] w-max px-3 text-white py-2 rounded-md">
+          Choose by Alphabets
+        </h4>
         {alphabets.map((d, k) => {
           return (
             <Link to={`/poem/${d}`}>
