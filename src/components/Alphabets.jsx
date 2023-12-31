@@ -31,7 +31,7 @@ const alphabets = [
 ];
 
 export const Alphabets = () => {
-  console.log("Choose by Alphabets");
+  // console.log("Choose by Alphabets");
   return (
     <div>
       <div className="wrapper_ mt-10 w-[60%] m-auto">

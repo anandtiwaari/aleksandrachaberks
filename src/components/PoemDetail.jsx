@@ -1,7 +1,35 @@
 import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { poemData } from "./poemData";
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 export const PoemDetail = () => {
+  const navigate = useNavigate();
+  const CustomNextArrow = (props) => (
+    <button onClick={props.onClick} className="bg-[white] ">
+      Next
+    </button>
+    // You can customize the button as per your design
+  );
+
+  const CustomPrevArrow = (props) => (
+    <button onClick={props.onClick} className="bg-[white] ">
+      Prev
+    </button>
+    // You can customize the button as per your design
+  );
+  const slickSettings = {
+    dots: true,
+    infinite: true,
+    speed: 1000,
+    autoplay: false,
+    slidesToShow: 2,
+    // nextArrow: <CustomNextArrow />,
+    // prevArrow: <CustomPrevArrow />,
+  };
+
   const { id } = useParams();
   const [currentPoem, setCurrentPoem] = useState(id.split("")[1]);
   let newPoemCount = poemData.find((data) => {
@@ -15,8 +43,21 @@ export const PoemDetail = () => {
     return data.id == id;
   });
   console.log(filteredDetailData, "show the filteredDetailData .... again");
-  console.log(id.split("")[1], "show the id here ....");
   console.log(currentPoem, "currentPoemcurrentPoem");
+  console.log(id, "its a id333333333");
+
+  let getTheListOfPoems = poemData.find((d) => {
+    return d.elem.includes(id.split("")[0]);
+  });
+  console.log(getTheListOfPoems, "show the  getTheListOfPoems");
+
+  // const Slide = () => {
+  //   return (
+  //     <h4 color="white" fontWeight="bold">
+  //       its a h4 title
+  //     </h4>
+  //   );
+  // };
   return (
     <div className="dark:bg-gray-800">
       <div className="bg-gray-100 dark:bg-gray-800 py-8">
@@ -30,18 +71,6 @@ export const PoemDetail = () => {
                   alt="Product Image"
                 />
               </div>
-              {/* <div className="flex -mx-2 mb-4">
-                <div className="w-1/2 px-2">
-                  <button className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
-                    Add to Cart
-                  </button>
-                </div>
-                <div className="w-1/2 px-2">
-                  <button className="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">
-                    Add to Wishlist
-                  </button>
-                </div>
-              </div> */}
             </div>
             <div className="md:flex-1 px-4">
               <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
@@ -50,93 +79,56 @@ export const PoemDetail = () => {
               <h3 className="text-gray-600 dark:text-gray-300 text-lg mb-4">
                 {filteredDetailData.poemDescription}
               </h3>
-              {/* <div className="flex mb-4">
-                <div className="mr-4">
-                  <span className="font-bold text-gray-700 dark:text-gray-300">
-                    Price:
-                  </span>
-                  <span className="text-gray-600 dark:text-gray-300">
-                    $29.99
-                  </span>
-                </div>
-                <div>
-                  <span className="font-bold text-gray-700 dark:text-gray-300">
-                    Availability:
-                  </span>
-                  <span className="text-gray-600 dark:text-gray-300">
-                    In Stock
-                  </span>
-                </div>
-              </div>
-              <div className="mb-4">
-                <span className="font-bold text-gray-700 dark:text-gray-300">
-                  Select Color:
-                </span>
-                <div className="flex items-center mt-2">
-                  <button className="w-6 h-6 rounded-full bg-gray-800 dark:bg-gray-200 mr-2"></button>
-                  <button className="w-6 h-6 rounded-full bg-red-500 dark:bg-red-700 mr-2"></button>
-                  <button className="w-6 h-6 rounded-full bg-blue-500 dark:bg-blue-700 mr-2"></button>
-                  <button className="w-6 h-6 rounded-full bg-yellow-500 dark:bg-yellow-700 mr-2"></button>
-                </div>
-              </div>
-              <div className="mb-4">
-                <span className="font-bold text-gray-700 dark:text-gray-300">
-                  Select Size:
-                </span>
-                <div className="flex items-center mt-2">
-                  <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                    S
-                  </button>
-                  <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                    M
-                  </button>
-                  <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                    L
-                  </button>
-                  <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                    XL
-                  </button>
-                  <button className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white py-2 px-4 rounded-full font-bold mr-2 hover:bg-gray-400 dark:hover:bg-gray-600">
-                    XXL
-                  </button>
-                </div>
-              </div>
-              <div>
-                <span className="font-bold text-gray-700 dark:text-gray-300">
-                  Product Description:
-                </span>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  sed ante justo. Integer euismod libero id mauris malesuada
-                  tincidunt. Vivamus commodo nulla ut lorem rhoncus aliquet.
-                  Duis dapibus augue vel ipsum pretium, et venenatis sem
-                  blandit. Quisque ut erat vitae nisi ultrices placerat non eget
-                  velit. Integer ornare mi sed ipsum lacinia, non sagittis
-                  mauris blandit. Morbi fermentum libero vel nisl suscipit, nec
-                  tincidunt mi consectetur.
-                  </p>
-                </div> */}
             </div>
           </div>
-          {/* <Link
-            onClick={() => {
-              if (currentPoem < newPoemCount.poem.length)
-                setCurrentPoem((prevData) => parseInt(prevData) - 1);
-            }}
-            to={`/poem/c${currentPoem}/detail`}
-          >
-            <button className="py-2 px-5 text-white bg-[grey]">Prev</button>
-          </Link>
-          <Link
-            onClick={() => {
-              if (currentPoem < newPoemCount.poem.length)
-                setCurrentPoem((prevData) => parseInt(prevData) + 1);
-            }}
-            to={`/poem/c${currentPoem}/detail`}
-          >
-            <button className="py-2 px-5 text-white bg-[grey]">Next</button>
-          </Link> */}
         </div>
+
+        <Slider {...slickSettings}>
+          {/* <div className="flex items-center bg-indigo-100 w-screen min-h-screen"> */}
+
+          {getTheListOfPoems?.poem?.map((data) => {
+            return (
+              <div
+                className=" md:w-1/2 lg:w-1/4 pl-5 pr-5 mb-5 lg:pl-2 lg:pr-2 cursor-pointer"
+                onClick={() => {
+                  navigate(`/poem/${data.id}/detail`);
+                }}
+              >
+                <div
+                  className="bg-white rounded-lg m-h-64 p-2 transform hover:translate-y-2 hover:shadow-xl transition duration-300 "
+                  style={{ width: "fit-content" }}
+                >
+                  <figure className="mb-2">
+                    <img
+                      src={data?.url}
+                      alt=""
+                      className="h-64 ml-auto mr-auto"
+                    />
+                  </figure>
+                  <div className="rounded-lg p-4 bg-purple-700 flex flex-col">
+                    <div>
+                      <h5 className="text-white text-2xl font-bold leading-none">
+                        {data?.name}
+                      </h5>
+                      <span className="text-md text-gray-400 leading-none">
+                        {data?.poemDescription?.substring(0, 60) + "......."}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+          {/* </div> */}
+          {/* <div>
+            <div className="flex items-center bg-indigo-100 w-screen min-h-screen">
+              <div className="container ml-auto mr-auto flex flex-wrap items-start">
+                <div className="w-full pl-5 lg:pl-2 mb-4 mt-4"></div>
+                <div className="w-full flex flex-wrap"></div>
+              </div>
+            </div>
+          </div> */}
+        </Slider>
       </div>
     </div>
   );
